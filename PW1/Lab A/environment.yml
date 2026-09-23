@@ -1,4 +1,4 @@
-name: cspc
+name: cspcls -la
 channels:
   - conda-forge
 dependencies:

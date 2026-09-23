@@ -23,5 +23,16 @@ conda activate cspc
 
 **Tests:** all passing? yes
 
+**Reproducibility check:**
+- My partner cloned my CSPC repository, created the environment from my
+  environment.yml, activated it, and ran `pytest -v` on their machine with
+  no changes — everything worked correctly (all tests passed).
+
 **Conclusion:**
 - The NumPy version is dramatically faster because it replaces the per-atom Python loop with a single vectorised `rng.binomial` call handled in optimized C code, instead of looping through every atom in the Python interpreter. I learned how much overhead pure-Python loops add at scale, and why vectorisation
+
+
+## PW1 --- Lab B
+
+Obsevred decay data was compared against the analytical law N0*exp(-lambda * t) with lambda = 0.3. The observed points closely follow the analytical curve, confirming exponential decay behaviour. The Snakemake pipeline runs plot.py to regenerete figure.png 
+from decay_observed.csv, rebuilding it only when the CSV or script has changed.

@@ -36,3 +36,8 @@ conda activate cspc
 
 Obsevred decay data was compared against the analytical law N0*exp(-lambda * t) with lambda = 0.3. The observed points closely follow the analytical curve, confirming exponential decay behaviour. The Snakemake pipeline runs plot.py to regenerete figure.png 
 from decay_observed.csv, rebuilding it only when the CSV or script has changed.
+
+## PW2 --- Lab A
+
+Measured mean acceleration: -8.58 m/s^2 (std dev: 28.72 m/s^2)
+The acceleration is far noisier than the position because differentiation amplifies noise: it compares nearby points, and small measurement errors become large relative changes once divided by the small time step. Since acceleration required two successive differentiations of the position data, the noise was amplified twice, which is why its standard deviation (~28.7) is so large even though the position itself looked smooth. Integrating the noisy acceleration back up to velocity and then position recovered the original trajectory to within 0.78 m — showing that integration (a running sum) partially cancels out random noise, the opposite effect of differentiation.

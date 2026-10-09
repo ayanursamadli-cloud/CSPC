@@ -41,3 +41,18 @@ from decay_observed.csv, rebuilding it only when the CSV or script has changed.
 
 Measured mean acceleration: -8.58 m/s^2 (std dev: 28.72 m/s^2)
 The acceleration is far noisier than the position because differentiation amplifies noise: it compares nearby points, and small measurement errors become large relative changes once divided by the small time step. Since acceleration required two successive differentiations of the position data, the noise was amplified twice, which is why its standard deviation (~28.7) is so large even though the position itself looked smooth. Integrating the noisy acceleration back up to velocity and then position recovered the original trajectory to within 0.78 m — showing that integration (a running sum) partially cancels out random noise, the opposite effect of differentiation.
+
+Bonus: the 2D trajectory forms a figure-eight path; speed (sqrt(vx^2 + vy^2)) was computed via np.gradient on x and y separately.
+
+## PW2 --- Lab B
+
+In part 2 we use 3 different methods(gradient descent, Newton, SLSQP) to get the minimum, which we nailed it in easier landscape, f(x) = (x−3)²+1 all three reach approximately x = 3.
+However in 2B g(x) = x⁴ − 3x² + x + 5 we see that at x0 = 0  newton method gives us a different result than others. Because newton method is not calculating the local minimum, it only calculates dg / dt = 0, which it can happen both local minimum and maximum, thats why in harder landscape we show the d(dg/dt)/dt and check if it is negative or positive. Choosing numbers for steps and l is a matter because from x0 = 2, gradient descent with l = 0.1 overshoots the nearby valley and ends at x ≈ −1.30, while l = 0.01 (with steps = 5000, since small steps need many iterations) converges to x ≈ 1.13. SLSQP also ended at x ≈ −1.30 from x0 = 2, so the result depends on the algorithm as well as the starting point.
+
+In part 3, I have read the kinetics.csv file, set the t and C array and intialize and equilize C0 Tto the first value of C. and with total_error function I have calculated
+the errors between guessed value and actual value and choose k which has the smalles error between actual value(the result k = 0.2618)
+Note : at first I have mistyped exp(-k, t) so the value was high than I expected(approximately 1.6). after retyping it got 0.2618, which is the value we desired.
+
+## Part 5 – Titration equivalence point
+
+I read titration.csv, computed the slope dpH/dV with np.gradient, and  found the volume of maximum slope with, np.argmax. The equivalence point is  at about ... mL, where the pH curve jumps and its slope peaks (see titration.png).

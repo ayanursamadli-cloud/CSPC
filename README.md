@@ -56,3 +56,33 @@ Note : at first I have mistyped exp(-k, t) so the value was high than I expected
 ## Part 5 – Titration equivalence point
 
 I read titration.csv, computed the slope dpH/dV with np.gradient, and  found the volume of maximum slope with, np.argmax. The equivalence point is  at about ... mL, where the pH curve jumps and its slope peaks (see titration.png).
+
+## PW3 Dataset 1, Session 1
+
+I loaded heart_disease_cleveland_new.csv with pandas (303 patients, 14 columns) and selected four continuous columns: age, chol, trestbps and thalach.  distributions.png shows 
+a histogram of each of the four variables (20 bins each). age is approximatley bell shaped, chol is also appriximately bell shaped but left skewed, thalach is right skewed, and trasbps is left skewed.
+For normality check I used two methods. First, I drew a Q-Q plot for each variable (qq.png), where points close to the straight line indicate normality. Second, I ran the Shapiro-Wilk test, where p < 0.05 means the variable is not normally distributed.
+age	0.0061	not normal
+chol	< 0.0001	not normal
+trestbps	< 0.0001	not normal
+thalach	0.0001	not normal
+Conclusion. All four variables have p < 0.05, so none of them can be treated as normally distributed. In the Q-Q plot of chol, the points at the upper end rise above the line, which indicates a long right tail, so the variable is not normal. Because of this, in Session 2 I will use non-parametric methods (Mann-Whitney U and Spearman correlation) instead of the t-test and Pearson correlation.
+
+## Session 2
+Heart rate. Mann-Whitney U test (two-sided), chosen because `thalach` is not normal: U = 5806.5, p = 1.9e-13. Mean thalach: disease 139.3 ± 1.9 (SEM),
+healthy 158.4 ± 1.5 (`means.png`). The error bars do not overlap, which agrees with the test: patients with heart disease reach a lower maximum heart rate.
+
+Age vs thalach. Spearman rho = -0.39 (p = 1.5e-12): older patients tend to reach a lower maximum heart rate (moderate negative relationship,`age_thalach.png`).
+
+Chemicals. Naively, cadmium (r = 0.88 with malignancy) looks far guiltier than benzene (r = 0.38). But pollution index correlates 0.98 with cadmium and
+0.05 with benzene, so it may be a confounder. Restricting to similar pollution (40 < index < 60, n = 199):
+
+Chemical  All data  Pollution held constant 
+benzene   0.38      0.70 
+cadmium   0.88      0.32 
+
+Conclusion: benzene is the real cause. Cadmium only looked guilty because it
+tracks pollution; its association collapses when pollution is controlled, while
+benzene's survives.
+
+Bonus: `target` proportions are 54.1% / 45.9%, Shannon entropy = 0.995 bits (max 1): almost perfectly balanced, so hard to guess.
